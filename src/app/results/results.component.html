@@ -1,0 +1,12 @@
+<div *ngIf="!poll"> Brak wyników dla tego głosowania</div>
+
+<div *ngIf="poll">
+    <app-upload></app-upload>
+<h1>{{poll}}</h1>
+    <mat-card *ngFor="let result of results | keyvalue">
+        <mat-card-title>{{result.key}}</mat-card-title>
+        <mat-card-content>
+            <div *ngFor="let item of result.value"> {{item.answer}}: {{item.count}}</div>
+        </mat-card-content>
+    </mat-card>
+</div>
