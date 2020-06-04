@@ -9,6 +9,7 @@ import { FileUploadControl, FileUploadValidators } from '@iplab/ngx-file-upload'
   selector: 'app-upload',
   template: `
     <mat-card>
+      <mat-card-title>Upload pliku podpisanego: </mat-card-title>
       <mat-card-content>
         <file-upload [multiple]="false" [control]="fileUploadControl"></file-upload>
       </mat-card-content>
