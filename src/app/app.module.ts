@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AboutModule } from './about/about.module';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -21,6 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatButtonModule,
     MatToolbarModule,
     MatProgressBarModule,
+    MatTooltipModule,
+    AboutModule,
   ],
 
   providers: [],

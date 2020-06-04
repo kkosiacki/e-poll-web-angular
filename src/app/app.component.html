@@ -14,8 +14,8 @@
 </g>
 </svg>
   </a>
-  <a mat-button routerLink="/polls">Głosowania</a>
-  <a mat-button routerLink="/upload">Dodaj wynik</a>
+  <a mat-button routerLink="/polls"  maToolTip="Lista aktywnych głosowań">Głosowania</a>
+  <a mat-button routerLink="/upload" maToolTip="Załaduj pliki">Dodaj wynik</a>
   <span class="nav-spacer"></span>
   <a class="nav-icon" title="e Głosowanie" routerLink="/about">
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve" height="40px" width="40px">
@@ -35,3 +35,15 @@
 <div>
   <router-outlet></router-outlet>
 </div>
+<div *ngIf="!isUpload" class="fab-container">
+  <div *ngIf="helpTimeout"><span  style="font-family: 'Segoe Script';font-size: 24px;">Załaduj pliki klikając tu -></span></div>
+  <div style="margin-left:2em;"><button mat-fab
+          routerLink="/upload"
+          matTooltip="Upload plików"
+          matTooltipPosition="above"
+          matTooltipHideDelay="100000"
+          >
+    <i class="material-icons">add</i>
+  </button>
+</div>
+  </div>

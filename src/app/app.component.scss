@@ -36,7 +36,19 @@ flex: 1 1 auto;
     box-shadow: 0px 3px 15px rgba(255, 255, 255, 0.2);
   }
 
-
+  .fab-container {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    z-index: 100;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+   
+  
+  
+  }
 
 
 
