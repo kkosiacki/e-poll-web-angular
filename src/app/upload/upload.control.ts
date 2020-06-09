@@ -3,26 +3,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FileUploadControl, FileUploadValidators } from '@iplab/ngx-file-upload';
+import { timer } from 'rxjs/internal/observable/timer';
 
 
 @Component({
   selector: 'app-upload',
-  template: `
-    <mat-card style='margin-right:2em;margin-left:2em'>
-      <mat-card-title>Upload pliku podpisanego: </mat-card-title>
-      <mat-card-content>
-        <file-upload [multiple]="false" [control]="fileUploadControl"></file-upload>
-      </mat-card-content>
-      <mat-card-actions>
-        <button [disabled]="fileUploadControl.invalid || fileUploadControl.size ==0" mat-raised-button color="primary" (click)= "upload()">Dodaj mój głos</button>
-      </mat-card-actions>
-    </mat-card>
-  `,
-  styles: [
-  ]
+  templateUrl: './upload.control.html',
+  styleUrls: ['./upload.control.scss']
 })
 export class UploadControl implements OnInit {
-  public fileUploadControl = new FileUploadControl([FileUploadValidators.filesLimit(1), FileUploadValidators.accept(['text/xml'])]);
+  public fileUploadControl = new FileUploadControl([FileUploadValidators.filesLimit(1), FileUploadValidators.accept(['text/xml'])]).setListVisibility(false);
 
 
   constructor(private http: HttpClient, private matSnackBar: MatSnackBar) { }
@@ -33,10 +23,11 @@ export class UploadControl implements OnInit {
   upload() {
     let formData = new FormData();
     formData.set('file',this.fileUploadControl.value[0]);
-    this.http.post<any>(environment.url + 'api/verify', formData
-  ).subscribe(
+    //this.http.post<any>(environment.url + 'api/verify', formData)
+    timer(4000)
+  .subscribe(
     t => {
-      this.matSnackBar.open("Dziękujemy za oddany głos... Pesel " + t.data.pesel + " został zarejestrowany")
+      this.matSnackBar.open("Dziękujemy za oddany głos... Pesel ");// + t.data.pesel + " został zarejestrowany")
     },
     err => {
       console.log(err.error.errors.file[0]);

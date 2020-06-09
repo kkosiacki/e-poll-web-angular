@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: "http://e-poll.test/"
+  url: "http://vps641898.ovh.net/"
 };
 
 /*
