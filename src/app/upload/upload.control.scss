@@ -18,3 +18,16 @@
 :host(.list-visible) .upload-text {
   display: none;
 }
+
+.file_action {
+  margin-left: 2em;
+}
+
+.hide_uploaded {
+  display: none;
+}
+.bold_uploaded {
+  font-weight: 700;
+  color: green;
+  
+}

@@ -1,3 +1,4 @@
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -21,7 +22,8 @@ import { UploadControl } from './upload/upload.control';
     MatSnackBarModule,
     MatListModule,
     MatProgressBarModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule
 
   ],
   exports: [MatCardModule, MatButtonModule, MatIconModule, UploadControl]
