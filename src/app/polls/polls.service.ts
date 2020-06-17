@@ -13,7 +13,7 @@ export class PollsService implements Resolve<Poll[]> {
   constructor(private http: HttpClient) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Poll[]> {
-    return this.http.get<Poll[]>(environment.url + 'api/polls/active');
+    return this.http.get<Poll[]>(environment.url + 'api/polls?filter[status]=active');
   }
 
 
