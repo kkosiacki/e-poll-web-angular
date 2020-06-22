@@ -17,9 +17,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class PollsComponent implements OnInit {
 
-  public polls: Poll[] = [];
-  public votes: Vote[] = [];
-  public accordionStates: number[] = [];
+  public poll: Poll;
+  public vote: Vote;
+  public accordionStates: number = 0;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -28,62 +28,61 @@ export class PollsComponent implements OnInit {
               private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.route.data
-      .subscribe(t => {
-        this.polls = t.polls.data;
-        // for accordion states
-        this.polls.forEach(poll => {
-          this.accordionStates.push(-1);
-          this.votes.push(new Vote(poll));
-        });
-      });
+     this.route.data
+       .subscribe(t => {
+         console.log(t);
+         console.log(t.poll);
+         this.poll = t.poll.data;
+            // for accordion states
+         this.vote = new Vote(this.poll);
+       });
   }
 
-  nextQuestion(index: number, question: number) {
-    this.accordionStates[index] = question + 1;
+  nextQuestion(question: number) {
+    this.accordionStates = question + 1;
   }
 
-  prevQuestion(index: number, question: number) {
-    this.accordionStates[index] = question - 1;
+  prevQuestion(question: number) {
+    this.accordionStates = question - 1;
   }
 
-  setQuestion(index: number, question: number) {
-      this.accordionStates[index] = question;
-      this.votes[index].clearValid();
+  setQuestion(question: number) {
+      this.accordionStates = question;
+      this.vote.clearValid();
   }
 
 
-  openSummary(index: number) {
-    if (this.votes[index].checkValid()) {
+  openSummary() {
+    if (this.vote.checkValid()) {
       const dialogConfig = new MatDialogConfig();
 
       dialogConfig.disableClose = false;
       dialogConfig.autoFocus = true;
-      dialogConfig.data = this.votes[index];
+      dialogConfig.data = this.vote;
 
       this.dialog.open(PollDialogComponent, dialogConfig).afterClosed().subscribe(t => {
       if (t) {
-          this.pollService.sendVote(this.votes[index]).subscribe(t => {
+          this.pollService.sendVote(this.vote).subscribe(t => {
             FileSaver.saveAs(t);
             this.snackBar.open("Dziękujemy za Twój głos",'OK', {duration : 3000})
-              .afterDismissed().subscribe( () => this.router.navigate(['/results',this.polls[index].slug]) );
+              .afterDismissed().subscribe( () => this.router.navigate(['/results',this.poll.slug]) );
           });
         }
       });
     }
   }
 
-  handleSingleAnswerChange(poll_i: number, question_i: number, event: MatRadioChange) {
-    this.votes[poll_i].clearValid();
-    this.votes[poll_i].questions[question_i].addAnswer(event.value);
+  handleSingleAnswerChange(question_i: number, event: MatRadioChange) {
+    this.vote.clearValid();
+    this.vote.questions[question_i].addAnswer(event.value);
   }
 
-  handleMultiAnswerChange(poll_i: number, question_i: number, event: MatSlideToggleChange, value: string) {
-    this.votes[poll_i].clearValid();
+  handleMultiAnswerChange(question_i: number, event: MatSlideToggleChange, value: string) {
+    this.vote.clearValid();
     if (event.checked) {
-      this.votes[poll_i].questions[question_i].addAnswer(value);
+      this.vote.questions[question_i].addAnswer(value);
     } else {
-      this.votes[poll_i].questions[question_i].removeAnswer(value);
+      this.vote.questions[question_i].removeAnswer(value);
     }
   }
 

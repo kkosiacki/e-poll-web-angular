@@ -11,12 +11,14 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { PollDialogComponent } from './poll-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import { PollsListComponent } from './polls-list.component';
+import { MatListModule } from '@angular/material/list';
 
 
 
 
 @NgModule({
-  declarations: [PollsComponent, PollDialogComponent],
+  declarations: [PollsComponent, PollDialogComponent, PollsListComponent],
   imports: [
     CommonModule,
     PollsRoutingModule,
@@ -25,6 +27,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatRadioModule,
     MatSlideToggleModule,
     MatDialogModule,
+    MatListModule,
     SharedModule
   ],
   entryComponents: [PollDialogComponent]

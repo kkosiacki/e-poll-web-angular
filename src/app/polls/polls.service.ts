@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Poll, Vote } from './poll.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -8,12 +8,16 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class PollsService implements Resolve<Poll[]> {
+export class PollsService {
 
   constructor(private http: HttpClient) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Poll[]> {
+  getPolls(): Observable<Poll[]> {
     return this.http.get<Poll[]>(environment.url + 'api/polls?filter[status]=active');
+  }
+
+  getPoll(slug: string): Observable<Poll> {
+    return this.http.get<Poll>(environment.url + 'api/polls/' + slug);
   }
 
 

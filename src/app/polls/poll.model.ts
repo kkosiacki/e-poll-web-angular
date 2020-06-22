@@ -2,7 +2,9 @@ import { stringify } from 'querystring';
 
 export class Poll {
     public slug: string;
-    public name: string;
+    public title: string;
+    public from: string;
+    public to: string;
     public questions: Question[];
 }
 
