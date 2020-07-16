@@ -32,7 +32,8 @@
                 <mat-slide-toggle  class="radio-button" *ngFor="let answer of question.answers" (change) = "handleMultiAnswerChange(question_i,$event,answer.slug)" >{{answer.answer}}</mat-slide-toggle>
             </div>
             <mat-action-row>
-                <button *ngIf="question_last" mat-flat-button color="primary" (click)='openSummary()'>Głosuj</button> 
+                <button *ngIf="question_last" [disabled] = "showDialog" mat-flat-button color="primary" (click)='openSummary()'>Głosuj</button> 
+                <button *ngIf="showDialog" mat-flat-button color="primary" (click)='download()'>Pobierz</button> 
                 <span style="flex: 1 1 auto;"></span>
                 <button *ngIf="!question_first" mat-button color="warn" (click)="prevQuestion(question_i)">Poprzednie</button>
                 <button *ngIf="!question_last" mat-button color="primary" (click)="nextQuestion(question_i)">Następne</button>

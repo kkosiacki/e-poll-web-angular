@@ -20,6 +20,8 @@ export class PollsComponent implements OnInit {
   public poll: Poll;
   public vote: Vote;
   public accordionStates: number = 0;
+  public showDialog: boolean;
+  public file: Blob;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -28,6 +30,8 @@ export class PollsComponent implements OnInit {
               private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.showDialog = false;
+    this.file = null;
      this.route.data
        .subscribe(t => {
          console.log(t);
@@ -51,24 +55,33 @@ export class PollsComponent implements OnInit {
       this.vote.clearValid();
   }
 
+   download() {
+     FileSaver.saveAs(this.file);
+   }
+
 
   openSummary() {
     if (this.vote.checkValid()) {
-      const dialogConfig = new MatDialogConfig();
-
-      dialogConfig.disableClose = false;
-      dialogConfig.autoFocus = true;
-      dialogConfig.data = this.vote;
-
-      this.dialog.open(PollDialogComponent, dialogConfig).afterClosed().subscribe(t => {
-      if (t) {
-          this.pollService.sendVote(this.vote).subscribe(t => {
-            FileSaver.saveAs(t);
-            this.snackBar.open("Dziękujemy za Twój głos",'OK', {duration : 3000})
-              .afterDismissed().subscribe( () => this.router.navigate(['/results',this.poll.slug]) );
-          });
-        }
+      this.pollService.sendVote(this.vote).subscribe(t => {
+        this.showDialog = true;
+        this.file = t;
       });
+
+      // const dialogConfig = new MatDialogConfig();
+
+      // dialogConfig.disableClose = false;
+      // dialogConfig.autoFocus = true;
+      // dialogConfig.data = this.vote;
+
+      // this.dialog.open(PollDialogComponent, dialogConfig).afterClosed().subscribe(t => {
+      // if (t) {
+      //     this.pollService.sendVote(this.vote).subscribe(t => {
+      //       FileSaver.saveAs(t);
+      //       this.snackBar.open("Dziękujemy za Twój głos",'OK', {duration : 3000})
+      //         .afterDismissed().subscribe( () => this.router.navigate(['/results',this.poll.slug]) );
+      //     });
+      //   }
+      // });
     }
   }
 
